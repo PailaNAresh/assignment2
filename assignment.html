@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: space-around;
+            background-color: #f4f4f4;
+            padding: 10px;
+        }
+
+        .tab {
+            cursor: pointer;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media screen and (max-width: 767px) {
+            .product-card {
+                width: 100%;
+            }
+        }
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {
+            .product-card {
+                width: 48%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="tabs">
+    <div class="tab" onclick="showProducts('Men')">Men</div>
+    <div class="tab" onclick="showProducts('Women')">Women</div>
+    <div class="tab" onclick="showProducts('Kids')">Kids</div>
+</div>
+
+<div class="product-container" id="product-container"></div>
+
+<script>
+    const productsData = {
+        Men: {
+            productBadge: "New Arrival",
+            productImage: "https://placekitten.com/300/200",
+            productName: "Men's Shoes",
+            vendorName: "Footwear World",
+            price: 69.99,
+            compareAtPrice: 89.99,
+        },
+        Women: {
+            productBadge: "Sale",
+            productImage: "https://placekitten.com/300/201",
+            productName: "Women's Dress",
+            vendorName: "Fashion Boutique",
+            price: 49.99,
+            compareAtPrice: 59.99,
+        },
+        Kids: {
+            productBadge: "Limited Stock",
+            productImage: "https://placekitten.com/300/202",
+            productName: "Kids Toy",
+            vendorName: "Toy Emporium",
+            price: 19.99,
+            compareAtPrice: 24.99,
+        },
+    };
+
+    function showProducts(category) {
+        const productContainer = document.getElementById('product-container');
+        productContainer.innerHTML = '';
+
+        const productData = productsData[category];
+
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+
+        productCard.innerHTML = `
+            <div>${productData.productBadge}</div>
+            <img src="${productData.productImage}" alt="${productData.productName}" class="product-image">
+            <h3>${productData.productName}</h3>
+            <p>Vendor: ${productData.vendorName}</p>
+            <p>Price: $${productData.price}</p>
+            <p>Compare at Price: $${productData.compareAtPrice}</p>
+            <p>Discount: ${calculateDiscountPercentage(productData.price, productData.compareAtPrice)}% off</p>
+            <button onclick="addToCart()">Add to Cart</button>
+        `;
+
+        productContainer.appendChild(productCard);
+    }
+
+    function calculateDiscountPercentage(price, compareAtPrice) {
+        const discount = ((compareAtPrice - price) / compareAtPrice) * 100;
+        return Math.round(discount);
+    }
+
+    function addToCart() {
+        alert("Product added to cart! (Dummy function)");
+    }
+
+    // Initially show products for the 'Men' category
+    showProducts('Men');
+</script>
+
+</body>
+</html>
